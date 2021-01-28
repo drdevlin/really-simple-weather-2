@@ -4,7 +4,8 @@ import {
   extractAppDataFrom, 
   extractExtremeDataFrom,
   extractNowDataFrom,
-  extractPrecipDataFrom
+  extractPrecipDataFrom,
+  extractTomorrowDataFrom
 } from './extractRelevantDataFrom';
 
 let mockInput;
@@ -179,7 +180,36 @@ describe('utils', () => {
         const actualOutput = extractPrecipDataFrom(mockInput);
 
         expect(actualOutput.pops).toMatchObject(expected);
-      })
+      });
+      afterAll(() => {
+        mockInput = null;
+      });
+    });
+
+    describe('extractTomorrowDataFrom(allData)', () => {
+      beforeEach(() => {
+        mockInput = fakeResponseJs();
+      });
+      it('accepts an object of all data and returns a valid object for the tomorrow key', () => {
+        const actualOutput = extractTomorrowDataFrom(mockInput);
+
+        expect(actualOutput.hasOwnProperty('condition')).toBeTruthy();
+        expect(actualOutput.hasOwnProperty('temp')).toBeTruthy();
+      });
+      it("returns the condition and temperature for tomorrow's forecast", () => {
+        const output1 = extractTomorrowDataFrom(mockInput);
+        mockInput.siteData.forecastGroup.forecast[0].period._attributes.textForecastName = 'Tonight';
+        mockInput.siteData.forecastGroup.forecast[1].abbreviatedForecast.iconCode._text = '38';
+        const output2 = extractTomorrowDataFrom(mockInput);
+
+        expect(output1.condition).toStrictEqual('okay');
+        expect(output1.temp).toStrictEqual(-7);
+        expect(output2.condition).not.toStrictEqual('okay');
+        expect(output2.temp).not.toStrictEqual(-7);
+      });
+      afterAll(() => {
+        mockInput = null;
+      });
     });
 
   });

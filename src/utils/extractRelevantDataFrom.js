@@ -1,6 +1,7 @@
 import { xml2js as convert } from 'xml-js';
 import convertDate from './convertDate';
 import windchill from './windchill';
+import condition from './condition';
 
 // Full extraction
 const extractRelevantDataFrom = (textResponse) => {
@@ -12,9 +13,10 @@ const extractRelevantDataFrom = (textResponse) => {
   const extreme = extractExtremeDataFrom(allData);
   const now = extractNowDataFrom(allData);
   const precip = extractPrecipDataFrom(allData);
+  const tomorrow = extractTomorrowDataFrom(allData);
 
   // Return relevant data
-  return { app, extreme, now, precip };
+  return { app, extreme, now, precip, tomorrow };
 };
 
 export default extractRelevantDataFrom;
@@ -24,58 +26,7 @@ export default extractRelevantDataFrom;
 export const extractAppDataFrom = (allData) => {
   const conditionCode = allData.siteData.forecastGroup.forecast[0].abbreviatedForecast.iconCode._text;
 
-  let condition;
-  switch (conditionCode) {
-    case '00':
-    case '01':
-    case '30':
-    case '31':
-      condition = "nice";
-      break;
-    case '02':
-    case '03':
-    case '04':
-    case '05':
-    case '10':
-    case '22':
-    case '23':
-    case '32':
-    case '33':
-    case '34':
-    case '35':
-      condition = "okay";
-      break;
-    case '06':
-    case '07':
-    case '08':
-    case '12':
-    case '13':
-    case '15':
-    case '16':
-    case '19':
-    case '24':
-    case '28':
-    case '36':
-    case '37':
-    case '38':
-      condition = "precip";
-      break;
-    case '09':
-    case '14':
-    case '17':
-    case '18':
-    case '27':
-    case '39':
-    case '40':
-    case '43':
-    case '44':
-      condition = "bad";
-      break;
-  default:
-      condition = "unknown";
-  }
-
-  return { condition };
+  return { condition: condition(conditionCode) };
 };
 
 export const extractExtremeDataFrom = (allData) => {
@@ -153,4 +104,18 @@ export const extractPrecipDataFrom = (allData) => {
   const time = (precipStart) ? convertDate(precipStart._attributes.dateTimeUTC).valueOf() : null;
 
   return { time, pops };
+}
+
+export const extractTomorrowDataFrom = (allData) => {
+  let temp, conditionCode;
+  if (allData.siteData.forecastGroup.forecast[0].period._attributes.textForecastName === 'Today') {
+    temp = Number(allData.siteData.forecastGroup.forecast[2].temperatures.temperature._text);
+    conditionCode = allData.siteData.forecastGroup.forecast[2].abbreviatedForecast.iconCode._text;
+  } else {
+    temp = Number(allData.siteData.forecastGroup.forecast[1].temperatures.temperature._text);
+    conditionCode = allData.siteData.forecastGroup.forecast[1].abbreviatedForecast.iconCode._text;
+  }
+
+  return { condition: condition(conditionCode), temp };
+
 }
