@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './Wind.css';
 
-function Wind() {
+function Wind({ wind }) {
   return (
     <section className='Wind' aria-label='Wind'>
       
@@ -9,4 +10,5 @@ function Wind() {
   );
 }
 
-export default Wind;
+const mapState = state => state.wind;
+export default connect(mapState)(Wind);

@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './Tomorrow.css';
 
-function Tomorrow() {
+function Tomorrow({ tomorrow }) {
   return (
     <section className='Tomorrow' aria-label='Tomorrow High'>
       
@@ -9,4 +10,5 @@ function Tomorrow() {
   );
 }
 
-export default Tomorrow;
+const mapState = state => state.tomorrow;
+export default connect(mapState)(Tomorrow);
