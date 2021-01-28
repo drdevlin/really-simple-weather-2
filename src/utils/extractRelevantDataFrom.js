@@ -10,9 +10,10 @@ const extractRelevantDataFrom = (textResponse) => {
   // Extract relevant data
   const app = extractAppDataFrom(allData);
   const extreme = extractExtremeDataFrom(allData);
+  const now = extractNowDataFrom(allData);
 
   // Return relevant data
-  return { app, extreme }
+  return { app, extreme, now }
 
 };
 
@@ -120,3 +121,25 @@ export const extractExtremeDataFrom = (allData) => {
     time: convertDate(extreme.hour).valueOf()
   }
 }
+
+export const extractNowDataFrom = (allData) => {
+  const currently = allData.siteData.currentConditions;
+  // Temperature
+  const isHumidex = currently.hasOwnProperty('humidex');
+  let temp = (isHumidex) ? Number(currently.humidex._text) : Number(currently.temperature._text);
+  // Wind
+  const isGusting = currently.wind.gust.hasOwnProperty('_text');
+  const windSpeed = (isGusting) ? Number(currently.wind.gust._text) : Number(currently.wind.speed._text);
+
+  let type;
+  if (temp <= 12 && !isHumidex) {
+    temp = windchill(temp, windSpeed);
+    type = 'windchill';
+  }
+
+  if (isHumidex) type = 'humidex';
+
+  if (!type) type = 'normal';
+  
+  return { temp: Math.round(temp), type };
+} 

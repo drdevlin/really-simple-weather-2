@@ -1,6 +1,10 @@
 import { fakeResponse, fakeResponseJs } from './fakeResponse';
 import extractRelevantDataFrom from './extractRelevantDataFrom';
-import { extractAppDataFrom, extractExtremeDataFrom } from './extractRelevantDataFrom';
+import { 
+  extractAppDataFrom, 
+  extractExtremeDataFrom,
+  extractNowDataFrom
+} from './extractRelevantDataFrom';
 
 let mockInput;
 
@@ -39,7 +43,9 @@ describe('utils', () => {
     */
 
     describe('extractAppDataFrom(allData)', () => {
-      beforeEach(() => { mockInput = { siteData: { forecastGroup: { forecast: [{ abbreviatedForecast: { iconCode: { _text: '01' }}}]}}}});
+      beforeEach(() => {
+        mockInput = fakeResponseJs();
+      });
       it('accepts an object of all data and returns a valid object for the app key', () => {
         const actualOutput = extractAppDataFrom(mockInput);
         expect(actualOutput.condition).toBeTruthy();
@@ -105,7 +111,46 @@ describe('utils', () => {
         const output2 = extractExtremeDataFrom(mockInput);
 
         expect(output1.temp).toBeGreaterThan(output2.temp);
-      })
-    })
+      });
+      afterAll(() => {
+        mockInput = null;
+      });
+    });
+
+    describe('extractNowDataFrom(allData)', () => {
+      beforeEach(() => {
+        mockInput = fakeResponseJs();
+      });
+      it('accepts an object of all data and returns a valid object for the now key', () => {
+        const actualOutput = extractNowDataFrom(mockInput);
+        expect(actualOutput.temp).toBeTruthy();
+        expect(actualOutput.type).toBeTruthy();
+      });
+      it('sets the temp to the humidex when there is one', () => {
+        const output1 = extractNowDataFrom(mockInput);
+        mockInput.siteData.currentConditions = { 
+          ...mockInput.siteData.currentConditions, 
+          humidex: { _text: '30'}
+        };
+        const output2 = extractNowDataFrom(mockInput);
+
+        expect(output1.temp).not.toStrictEqual(30);
+        expect(output1.type).not.toStrictEqual('humidex');
+        expect(output2.temp).toStrictEqual(30);
+        expect(output2.type).toStrictEqual('humidex');
+      });
+      it('sets the temp to the windchill when temp is 12 or less', () => {
+        mockInput.siteData.currentConditions.temperature = { _text: '13' };
+        const output1 = extractNowDataFrom(mockInput);
+        mockInput = fakeResponseJs();
+        const output2 = extractNowDataFrom(mockInput);
+
+        expect(output1.temp).toBeGreaterThan(-3);
+        expect(output1.type).not.toStrictEqual('windchill');
+        expect(output2.temp).toBeLessThan(-3);
+        expect(output2.type).toStrictEqual('windchill');
+      });
+    });
+
   });
 });
