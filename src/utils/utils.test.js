@@ -13,37 +13,35 @@ let mockInput;
 
 describe('utils', () => {
   describe('extractRelevantDataFrom(textResponse)', () => {
-    /*
     it('accepts a string and returns a valid object for store', () => {
       const validObject = {
         app: {
           condition: 'okay'
         },
-        now: {
-          temp: -4,
-          type: 'normal'
-        },
         extreme: {
-          temp: -3,
-          type: 'normal',
-          time: Date.now() //dateTimeUTC="202101271800"
+          temp: -9,
+          type: 'windchill',
+          time: new Date('January 27, 2021 13:00:00').valueOf() //202101271800
+        },
+        now: {
+          temp: -11,
+          type: 'windchill'
         },
         precip: {
           time: null,
           pops: [ 10, 10, 10, 10, 10, 10, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20 ]
         },
-        wind: {
-          speeds: [ 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 40, 40, 20, 20, 20, 20, 20, 20, 10, 10, 10, 10, 20, 20 ]
-        },
         tomorrow: {
           condition: 'okay',
           temp: -7
         },
+        wind: {
+          speeds: [ 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 40, 40, 20, 20, 20, 20, 20, 20, 10, 10, 10, 10, 20, 20 ]
+        }
       }
       const actualOutput = extractRelevantDataFrom(fakeResponse);
-      expect(actualOutput).toBe(validObject);
+      expect(actualOutput).toMatchObject(validObject);
     });
-    */
 
     describe('extractAppDataFrom(allData)', () => {
       beforeEach(() => {

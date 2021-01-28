@@ -4,25 +4,25 @@ const initialState = {
   app: {
     condition: 'nice'
   },
-  now: {
-    temp: 0,
-    type: 'normal'
-  },
   extreme: {
     temp: 0,
     type: 'normal',
     time: Date.now()
   },
+  now: {
+    temp: 0,
+    type: 'normal'
+  },
   precip: {
     time: Date.now(),
     pops: []
   },
-  wind: {
-    speeds: []
-  },
   tomorrow: {
     condition: 'nice',
     temp: 0
+  },
+  wind: {
+    speeds: []
   },
   fetchStatus: 'idle',
   error: null
