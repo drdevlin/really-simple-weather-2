@@ -3,7 +3,8 @@ import extractRelevantDataFrom from './extractRelevantDataFrom';
 import { 
   extractAppDataFrom, 
   extractExtremeDataFrom,
-  extractNowDataFrom
+  extractNowDataFrom,
+  extractPrecipDataFrom
 } from './extractRelevantDataFrom';
 
 let mockInput;
@@ -150,6 +151,35 @@ describe('utils', () => {
         expect(output2.temp).toBeLessThan(-3);
         expect(output2.type).toStrictEqual('windchill');
       });
+      afterAll(() => {
+        mockInput = null;
+      });
+    });
+
+    describe('extractPrecipDataFrom(allData)', () => {
+      beforeEach(() => {
+        mockInput = fakeResponseJs();
+      });
+      it('accepts an object of all data and returns a valid object for the precip key', () => {
+        const actualOutput = extractPrecipDataFrom(mockInput);
+
+        expect(actualOutput.hasOwnProperty('time')).toBeTruthy();
+        expect(actualOutput.hasOwnProperty('pops')).toBeTruthy();
+      });
+      it('returns the time of the first POP >= 50%, null otherwise', () => {
+        const outputNull = extractPrecipDataFrom(mockInput);
+        mockInput.siteData.hourlyForecastGroup.hourlyForecast[5].lop._text = '50';
+        const output50 = extractPrecipDataFrom(mockInput);
+
+        expect(outputNull.time).toBeNull();
+        expect(output50.time).toStrictEqual(new Date('January 27, 2021 16:00:00').valueOf()); //202101272100
+      });
+      it('returns the hourly POPs as an array', () => {
+        const expected = [ 10, 10, 10, 10, 10, 10, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20 ];
+        const actualOutput = extractPrecipDataFrom(mockInput);
+
+        expect(actualOutput.pops).toMatchObject(expected);
+      })
     });
 
   });

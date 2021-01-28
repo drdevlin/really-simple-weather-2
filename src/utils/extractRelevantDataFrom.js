@@ -11,10 +11,10 @@ const extractRelevantDataFrom = (textResponse) => {
   const app = extractAppDataFrom(allData);
   const extreme = extractExtremeDataFrom(allData);
   const now = extractNowDataFrom(allData);
+  const precip = extractPrecipDataFrom(allData);
 
   // Return relevant data
-  return { app, extreme, now }
-
+  return { app, extreme, now, precip };
 };
 
 export default extractRelevantDataFrom;
@@ -142,4 +142,15 @@ export const extractNowDataFrom = (allData) => {
   if (!type) type = 'normal';
   
   return { temp: Math.round(temp), type };
-} 
+}
+
+export const extractPrecipDataFrom = (allData) => {
+  // POPs
+  const hourlyForecasts = allData.siteData.hourlyForecastGroup.hourlyForecast;
+  const pops = hourlyForecasts.map(hourlyForecast => Number(hourlyForecast.lop._text));
+  // Precipitation start time
+  const precipStart = hourlyForecasts.find(hourlyForecast => hourlyForecast.lop._text >= 50);
+  const time = (precipStart) ? convertDate(precipStart._attributes.dateTimeUTC).valueOf() : null;
+
+  return { time, pops };
+}
