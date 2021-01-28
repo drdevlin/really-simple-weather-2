@@ -5,11 +5,10 @@ import store from '../../store/store';
 import Now from './Now';
 
 describe('<Now />', () => {
-  it('renders some elements', async () => {
+  it('displays the tempurature', async () => {
     await render(<Provider store={store}><Now /></Provider>);
-    const component = screen.getByRole('region');
-    const { children } = component;
+    const tempurature = screen.queryByText(/\d/);
 
-    expect(children.length).toBeTruthy();
+    expect(tempurature).not.toBeNull();
   });
 });

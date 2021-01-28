@@ -5,11 +5,10 @@ import store from '../../store/store';
 import App from './App';
 
 describe('<App />', () => {
-  it('renders some elements', async () => {
+  it('renders some text', async () => {
     await render(<Provider store={store}><App /></Provider>);
-    const component = screen.getByRole('main');
-    const { children } = component;
+    const text = screen.queryAllByText(/./g);
 
-    expect(children.length).toBeTruthy();
+    expect(text.length).toBeTruthy();
   });
 });
