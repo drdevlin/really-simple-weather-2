@@ -5,7 +5,8 @@ import {
   extractExtremeDataFrom,
   extractNowDataFrom,
   extractPrecipDataFrom,
-  extractTomorrowDataFrom
+  extractTomorrowDataFrom,
+  extractWindDataFrom
 } from './extractRelevantDataFrom';
 
 let mockInput;
@@ -206,6 +207,26 @@ describe('utils', () => {
         expect(output1.temp).toStrictEqual(-7);
         expect(output2.condition).not.toStrictEqual('okay');
         expect(output2.temp).not.toStrictEqual(-7);
+      });
+      afterAll(() => {
+        mockInput = null;
+      });
+    });
+
+    describe('extractWindDataFrom(allData)', () => {
+      beforeEach(() => {
+        mockInput = fakeResponseJs();
+      });
+      it('accepts an object of all data and returns a valid object for the wind key', () => {
+        const actualOutput = extractWindDataFrom(mockInput);
+
+        expect(actualOutput.hasOwnProperty('speeds')).toBeTruthy();
+      });
+      it('returns the hourly wind speeds as an array', () => {
+        const expected = [ 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 40, 40, 20, 20, 20, 20, 20, 20, 10, 10, 10, 10, 20, 20 ];
+        const actualOutput = extractWindDataFrom(mockInput);
+
+        expect(actualOutput.speeds).toMatchObject(expected);
       });
       afterAll(() => {
         mockInput = null;

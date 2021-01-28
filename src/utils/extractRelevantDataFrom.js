@@ -14,9 +14,10 @@ const extractRelevantDataFrom = (textResponse) => {
   const now = extractNowDataFrom(allData);
   const precip = extractPrecipDataFrom(allData);
   const tomorrow = extractTomorrowDataFrom(allData);
+  const wind = extractWindDataFrom(allData);
 
   // Return relevant data
-  return { app, extreme, now, precip, tomorrow };
+  return { app, extreme, now, precip, tomorrow, wind };
 };
 
 export default extractRelevantDataFrom;
@@ -117,5 +118,14 @@ export const extractTomorrowDataFrom = (allData) => {
   }
 
   return { condition: condition(conditionCode), temp };
+}
 
+export const extractWindDataFrom = (allData) => {
+  const hourlyForecasts = allData.siteData.hourlyForecastGroup.hourlyForecast;
+  const speeds = hourlyForecasts.map(hourlyForecast => {
+    const isGusting = hourlyForecast.wind.gust.hasOwnProperty('_text');
+    return (isGusting) ? Number(hourlyForecast.wind.gust._text) : Number(hourlyForecast.wind.speed._text);
+  });
+
+  return { speeds };
 }
