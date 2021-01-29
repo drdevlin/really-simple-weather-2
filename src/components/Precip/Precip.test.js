@@ -3,13 +3,12 @@ import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import store from '../../store/store';
 import Precip from './Precip';
+import { updatePrecip } from '../../store/actions';
 
 describe('<Precip />', () => {
-  it('renders some elements', async () => {
+  it('shows the precipitation over 24 hours', async () => {
+    store.dispatch(updatePrecip({ time: null, pops: [ 10, 20, 30, 40 ]}));
     await render(<Provider store={store}><Precip /></Provider>);
-    const component = screen.getByRole('region');
-    const { children } = component;
-
-    expect(children.length).toBeTruthy();
+    expect(screen.debug()).toBeNull(); //placeholder
   });
 });
