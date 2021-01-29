@@ -5,11 +5,20 @@ import store from '../../store/store';
 import Extreme from './Extreme';
 
 describe('<Extreme />', () => {
-  it('renders some elements', async () => {
+  it('displays the time of the high/low tempurature', async () => {
     await render(<Provider store={store}><Extreme /></Provider>);
-    const component = screen.getByRole('region');
-    const { children } = component;
+    const tempurature = screen.queryByText(/:/);
 
-    expect(children.length).toBeTruthy();
+    expect(tempurature).not.toBeNull();
+  });
+  it('displays the high or low tempurature', async () => {
+    await render(<Provider store={store}><Extreme /></Provider>);
+    const tempurature = screen.queryByText(/°/);
+
+    expect(tempurature).not.toBeNull();
+  });
+  it('indicates windchill/humidex by degree symbol color', async () => {
+    await render(<Provider store={store}><Extreme /></Provider>);
+    expect(screen.debug()).toBeNull(); //placeholder
   });
 });
