@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './Tomorrow.css';
 
-function Tomorrow({ tomorrow }) {
+function Tomorrow({ condition, temp }) {
   return (
     <section className='Tomorrow' aria-label='Tomorrow High'>
       
@@ -10,5 +10,5 @@ function Tomorrow({ tomorrow }) {
   );
 }
 
-const mapState = state => state.tomorrow;
+const mapState = ({ tomorrow }) => tomorrow;
 export default connect(mapState)(Tomorrow);

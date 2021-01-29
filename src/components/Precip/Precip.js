@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './Precip.css';
 
-function Precip({ precip }) {
+function Precip({ time, pops }) {
   return (
     <section className='Precip' aria-label='Precipitation'>
       
@@ -10,5 +10,5 @@ function Precip({ precip }) {
   );
 }
 
-const mapState = state => state.precip;
+const mapState = ({ precip }) => precip;
 export default connect(mapState)(Precip);

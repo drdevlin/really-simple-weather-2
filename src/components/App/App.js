@@ -12,7 +12,7 @@ import Tomorrow from '../Tomorrow/Tomorrow';
 import * as action from '../../store/actions';
 
 
-function App({ dispatch, app }) {
+function App({ dispatch, condition, fetchStatus, error, precipTime }) {
 
   useEffect(() => {
     const { app, extreme, now, precip, tomorrow, wind } = extractRelevantDataFrom(fakeResponse);
@@ -36,5 +36,5 @@ function App({ dispatch, app }) {
   );
 }
 
-const mapState = state => state.app;
+const mapState = state => ({ ...state.app, ...state.status, precipTime: state.precip.time });
 export default connect(mapState)(App);

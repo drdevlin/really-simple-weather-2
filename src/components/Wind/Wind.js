@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './Wind.css';
 
-function Wind({ wind }) {
+function Wind({ speeds }) {
   return (
     <section className='Wind' aria-label='Wind'>
       
@@ -10,5 +10,5 @@ function Wind({ wind }) {
   );
 }
 
-const mapState = state => state.wind;
+const mapState = ({ wind }) => wind;
 export default connect(mapState)(Wind);

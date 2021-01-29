@@ -25,8 +25,10 @@ const initialState = {
   wind: {
     speeds: []
   },
-  fetchStatus: 'idle',
-  error: null
+  status: {
+    fetchStatus: 'idle',
+    error: null
+  }
 };
 
 const reducer = (state, action) => {

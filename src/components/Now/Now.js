@@ -10,5 +10,5 @@ function Now({ temp, type }) {
   );
 }
 
-const mapState = state => state.now;
+const mapState = ({ now }) => now;
 export default connect(mapState)(Now);
