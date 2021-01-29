@@ -5,7 +5,7 @@ import './Now.css';
 function Now({ temp, type }) {
   return (
     <section className='Now' aria-label='Current tempurature'>
-      <p>{temp}</p>
+      <p>{temp}<span className={type}>°</span></p>
     </section>
   );
 }

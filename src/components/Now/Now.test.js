@@ -11,4 +11,8 @@ describe('<Now />', () => {
 
     expect(tempurature).not.toBeNull();
   });
+  it('indicates windchill/humidex by degree symbol color', async () => {
+    await render(<Provider store={store}><Now /></Provider>);
+    expect(screen.debug()).toBeNull(); //placeholder
+  });
 });
