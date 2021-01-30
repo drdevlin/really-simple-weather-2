@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import extractRelevantDataFrom from '../../utils/extractRelevantDataFrom';
-import { fakeResponse } from '../../utils/fakeResponse';
 import './App.css';
 
 import Now from '../Now/Now';
@@ -9,29 +7,33 @@ import Extreme from '../Extreme/Extreme';
 import Precip from '../Precip/Precip';
 import Wind from '../Wind/Wind';
 import Tomorrow from '../Tomorrow/Tomorrow';
-import * as action from '../../store/actions';
+import { fetchWeather } from '../../store/actions';
 
 
 function App({ dispatch, condition, fetchStatus, error, precipTime }) {
-
   useEffect(() => {
-    const { app, extreme, now, precip, tomorrow, wind } = extractRelevantDataFrom(fakeResponse);
-    dispatch(action.updateApp(app));
-    dispatch(action.updateExtreme(extreme));
-    dispatch(action.updateNow(now));
-    dispatch(action.updatePrecip(precip));
-    dispatch(action.updateTomorrow(tomorrow));
-    dispatch(action.updateWind(wind));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (fetchStatus === 'idle') {
+      dispatch(fetchWeather());    
+    }
+  }, [dispatch, fetchStatus]);
 
-  return (
-    <main className="App">
+  let mode;
+  if (fetchStatus === 'failure') {
+    mode = <p>{error}</p>;
+  } else if (fetchStatus === 'loading') {
+    mode = <p>Loading...</p>
+  } else if (fetchStatus === 'success') {
+    mode = (<>
       <Now />
       <Extreme />
-      <Precip />
-      <Wind />
+      {(precipTime) ? <Precip /> : <Wind />}
       <Tomorrow />
+    </>);
+  }
+
+  return (
+    <main className={`App ${condition}`}>
+      {mode}
     </main>
   );
 }

@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import * as is from './actions';
 
 const initialState = {
@@ -33,6 +34,8 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case is.updateAll().type:
+      return { ...state, ...action.payload };
     case is.updateApp().type:
       return { ...state, app: action.app };
     case is.updateExtreme().type:
@@ -45,11 +48,16 @@ const reducer = (state, action) => {
       return { ...state, tomorrow: action.tomorrow };
     case is.updateWind().type:
       return { ...state, wind: action.wind };
+    case is.updateStatus().type:
+    case is.fetchLoading().type:
+    case is.fetchSuccess().type:
+    case is.fetchFailure({message:null}).type:
+      return { ...state, status: { ...state.status, ...action.updates }};
     default:
       return state;
   }
 };
 
-const store = createStore(reducer, initialState);
+const store = createStore(reducer, initialState, applyMiddleware(thunk));
 
 export default store;
