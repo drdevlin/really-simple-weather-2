@@ -16,6 +16,10 @@ body {
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
 }
 
+.all:hover {
+  cursor: pointer;
+}
+
 
 @media screen and (orientation: landscape) {
   p {

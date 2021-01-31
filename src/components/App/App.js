@@ -11,6 +11,12 @@ import { fetchWeather } from '../../store/actions';
 
 
 function App({ dispatch, condition, fetchStatus, error, precipTime }) {
+  const handleRefreshClick = () => {
+    if (fetchStatus !== 'loading') {
+      dispatch(fetchWeather());
+    }
+  }
+
   useEffect(() => {
     if (fetchStatus === 'idle') {
       dispatch(fetchWeather());    
@@ -24,7 +30,7 @@ function App({ dispatch, condition, fetchStatus, error, precipTime }) {
     mode = <div className='spinner'></div>;
   } else if (fetchStatus === 'success') {
     mode = (
-      <section className='all'>
+      <section className='all' onClick={handleRefreshClick}>
         <Now />
         <Extreme />
         {(precipTime) ? <Precip /> : <Wind />}
