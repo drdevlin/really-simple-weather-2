@@ -33,7 +33,7 @@ body {
 
 @media screen and (orientation: portrait) {
   p {
-    font-size: 5vw;
+    font-size: 7vw;
   }
   .all {
     height: 90vw;
