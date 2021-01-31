@@ -62,8 +62,8 @@ body {
   height: 64px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid grey;
-  border-color: grey transparent grey transparent;
+  border: 6px solid rgba(0, 0, 0, .5);
+  border-color: rgba(0, 0, 0, .5) transparent rgba(0, 0, 0, .5) transparent;
   animation: spinner 1.2s linear infinite;
 }
 @keyframes spinner {
