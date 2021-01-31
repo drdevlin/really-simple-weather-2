@@ -8,6 +8,15 @@
   justify-content: center;
 }
 
-.Now > p {
-  font-size: 35vh;
+@media screen and (orientation: landscape) {
+  .Now > p {
+    font-size: 35vh;
+  }
 }
+
+@media screen and (orientation: portrait) {
+  .Now > p {
+    font-size: 45vw;
+  }
+}
+

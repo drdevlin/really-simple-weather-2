@@ -16,9 +16,20 @@ p {
 }
 
 .all {
-  height: 70vh;
-  width: 70vh;
-
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
+
+@media screen and (orientation: landscape) {
+  .all {
+    height: 70vh;
+    width: 70vh;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .all {
+    height: 90vw;
+    width: 90vw;
+  }
 }
