@@ -2,10 +2,6 @@ body {
   font-family: -apple-system, sans-serif;
 }
 
-p {
-  font-size: 5vh;
-}
-
 .App {
   height: 100vh;
   width: 100vw;
@@ -22,6 +18,9 @@ p {
 
 
 @media screen and (orientation: landscape) {
+  p {
+    font-size: 5vh;
+  }
   .all {
     height: 70vh;
     width: 70vh;
@@ -33,6 +32,9 @@ p {
 }
 
 @media screen and (orientation: portrait) {
+  p {
+    font-size: 5vw;
+  }
   .all {
     height: 90vw;
     width: 90vw;
