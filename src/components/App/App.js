@@ -23,19 +23,19 @@ function App({ dispatch, condition, fetchStatus, error, precipTime }) {
   } else if (fetchStatus === 'loading') {
     mode = <p>Loading...</p>
   } else if (fetchStatus === 'success') {
-    mode = (<>
-      <Now />
-      <Extreme />
-      {(precipTime) ? <Precip /> : <Wind />}
-      <Tomorrow />
-    </>);
+    mode = (
+      <section className='all'>
+        <Now />
+        <Extreme />
+        {(precipTime) ? <Precip /> : <Wind />}
+        <Tomorrow />
+      </section>
+    );
   }
 
   return (
     <main className={`App ${condition}`}>
-      <section className='all'>
-        {mode}
-      </section>
+      {mode}
     </main>
   );
 }

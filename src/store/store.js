@@ -4,7 +4,7 @@ import * as is from './actions';
 
 const initialState = {
   app: {
-    condition: 'nice'
+    condition: 'unknown'
   },
   extreme: {
     temp: 0,
@@ -20,7 +20,7 @@ const initialState = {
     pops: []
   },
   tomorrow: {
-    condition: 'nice',
+    condition: 'unknown',
     temp: 0
   },
   wind: {
