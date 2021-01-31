@@ -20,10 +20,15 @@ p {
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
 }
 
+
 @media screen and (orientation: landscape) {
   .all {
     height: 70vh;
     width: 70vh;
+  }
+  .Extreme, .Precip, .Tomorrow, .Wind {
+    margin: 1vh;
+    border: 1vh solid;
   }
 }
 
@@ -31,5 +36,9 @@ p {
   .all {
     height: 90vw;
     width: 90vw;
+  }
+  .Extreme, .Precip, .Tomorrow, .Wind {
+    margin: 1vw;
+    border: 1vw solid;
   }
 }
