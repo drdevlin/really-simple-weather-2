@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './Tomorrow.css';
 
 function Tomorrow({ condition, temp, conditionToday }) {
-  const conditionJsx = (condition === conditionToday) ? null : <div className={`condition-tomorrow ${condition}`} ></div>;
+  const conditionJsx = (condition === conditionToday) ? null : <div className={`tomorrow-condition ${condition}`} ></div>;
 
   return (
     <section className='Tomorrow' aria-label='Tomorrow High'>

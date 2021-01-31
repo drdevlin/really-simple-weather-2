@@ -37,7 +37,7 @@ export const fetchFailure = error => {
 }
 
 // Thunks
-export const fetchWeather = () => async (dispatch) => {
+export const fetchWeather = () => async (dispatch, getState) => {
   dispatch(fetchLoading());
   try {
     const payload = await extractRelevantDataFrom(fakeResponse);

@@ -33,7 +33,9 @@ function App({ dispatch, condition, fetchStatus, error, precipTime }) {
 
   return (
     <main className={`App ${condition}`}>
-      {mode}
+      <section className='all'>
+        {mode}
+      </section>
     </main>
   );
 }

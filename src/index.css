@@ -1,1 +1,46 @@
+/* Conditions */
+.nice {
+	background-color: #0278ae;
+	border-color: #eeeeee;
+	color: #eeeeee;
+}
 
+.okay {
+	background: linear-gradient(#99aacc, #0278ae);
+	border-color: #191919;
+	color: #191919;
+}
+
+.precip {
+	background-color: #99aacc;
+	border-color: #191919;
+	color: #191919;
+}
+
+.bad {
+	background-color: #0f3057;
+	border-color: #eeeeee;
+	color: #eeeeee;
+}
+
+.unknown {
+	background-color: white;
+	color: grey;
+}
+
+/* Types */
+.humidex.dark {
+	color: #261900;
+}
+
+.humidex.light {
+	color: #ede5d5;
+}
+
+.windchill.dark {
+	color: #000026;
+}
+
+.windchill.light {
+	color: #d5d5ed;
+}

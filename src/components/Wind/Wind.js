@@ -5,7 +5,7 @@ import './Wind.css';
 function Wind({ speeds }) {
   return (
     <section className='Wind' aria-label='Wind'>
-      {speeds.map((speed, i) => <div key={`speeds${i}`} className='wind-speed' speed={`${speed}%`}></div>)}
+      {speeds.map((speed, i) => <div key={`speeds${i}`} className='wind-speed' style={{ width: `${speed}%` }}></div>)}
     </section>
   );
 }

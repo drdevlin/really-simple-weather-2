@@ -14,7 +14,9 @@ function Precip({ time, pops }) {
   return (
     <section className='Precip' aria-label='Precipitation'>
       {timeJsx}
-      {pops.map((pop, i) => <div key={`pops${i}`} className='pop' pop={`${pop}%`}></div>)}
+      <div className='precip-chart'>
+        {pops.map((pop, i) => <div key={`pops${i}`} className='pop' style={{height: `${pop}%`}}></div>)}
+      </div>
     </section>
   );
 }
