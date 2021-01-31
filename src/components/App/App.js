@@ -21,7 +21,7 @@ function App({ dispatch, condition, fetchStatus, error, precipTime }) {
   if (fetchStatus === 'failure') {
     mode = <p>{error}</p>;
   } else if (fetchStatus === 'loading') {
-    mode = <p>Loading...</p>
+    mode = <div className='spinner'></div>;
   } else if (fetchStatus === 'success') {
     mode = (
       <section className='all'>
