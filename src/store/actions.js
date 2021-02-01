@@ -40,8 +40,7 @@ export const fetchFailure = error => {
 export const fetchWeather = () => async (dispatch, getState) => {
   dispatch(fetchLoading());
   try {
-    // Localhost for development: DO NOT COMMIT
-    const response = await fetchResults('http://localhost:4444?url=https://dd.weather.gc.ca/citypage_weather/xml/ON/s0000785_e.xml');
+    const response = await fetchResults('https://morning-caverns-71289.herokuapp.com?url=https://dd.weather.gc.ca/citypage_weather/xml/ON/s0000785_e.xml');
     const payload = extractRelevantDataFrom(response);
     dispatch(updateAll(payload));
     dispatch(fetchSuccess());
