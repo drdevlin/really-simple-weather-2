@@ -5,14 +5,15 @@ import store from '../../store/store';
 import App from './App';
 
 describe('<App />', () => {
-  // it('renders some text', async () => {
-  //   await render(<Provider store={store}><App /></Provider>);
-  //   const text = await screen.findAllByText(/./g);
+  it('everything should be rendering', async () => {
+    const { container } = await render(<Provider store={store}><App /></Provider>);
+    const temps = await screen.findAllByText(/°/);
+    const times = await screen.findAllByText(/:/);
+    const pops = container.querySelectorAll('.pop').length
+    const speeds = container.querySelectorAll('.wind-speed').length
 
-  //   expect(text.length).toBeTruthy();
-  // });
-  it('everything works', async () => {
-    await render(<Provider store={store}><App /></Provider>);
-    expect(screen.debug()).toBeNull(); //placeholder
+    expect(temps.length).toBe(3);
+    expect(times.length).toBeGreaterThan(0);
+    expect(pops || speeds).toBeTruthy();
   });
 });
